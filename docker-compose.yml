@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+  traefik:
+    image: traefik:1.4.5
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - web
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/docker-treebase/traefik.dev.toml:/traefik.toml
+      - ${ACME_JSON:-./acme.json}:/acme.json
+    container_name: traefik
+
+# run docker network create web before
+networks:
+  web:
+    external: true
