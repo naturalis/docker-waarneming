@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  web:
+    image: naturalis/waarneming-obs:0.0.1
+    volumes:
+      - /data/obs/django:/code
+    networks:
+      - default
+    ports:
+      - "8000:8000"
+    command:
+      tail -f /dev/null
+    depends_on:
+      - db
+    links:
+      - db
+
+  traefik:
+    image: traefik:1.4.5
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - web
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/docker-treebase/traefik.dev.toml:/traefik.toml
+      - ${ACME_JSON:-./acme.json}:/acme.json
+    container_name: traefik
+
+  db:
+#    image: postgres:10.0-alpine
+    image: naturalis/waarneming-postgres:0.0.1
+    environment:
+      POSTGRES_USER: obs
+      POSTGRES_PASSWORD: "OHPHLTUMKQ4u7FXu"
+    ports:
+      - "5431:5432"
+    networks:
+      - default
+    volumes:
+      - /data/obs-db:/docker-entrypoint-initdb.d
+#    volumes:
+#      - "/data/waarneming-postgres-data:/var/lib/postgresql/data"
+  cache:
+    image: memcached
+    ports:
+      - "11211:11211"
+    entrypoint:
+      - memcached
+      - -m 64
+
+# run docker network create web before
+networks:
+  web:
+    external: true
