@@ -17,18 +17,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 RUN pip install virtualenv && \
-    pip install uwsgi && \
-    mkdir /code && \
-    virtualenv --no-site-packages /code
+    mkdir /var/uwsgi
+#    pip install uwsgi && \
+#    mkdir /code && \
+#    virtualenv --no-site-packages /code/virtualenv
 
 WORKDIR /code
-ADD data/ /code/
 ADD supervisor.conf /opt/supervisor.conf
 ADD docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
-RUN pip install -r requirements.txt
-
-#ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
 #RUN python manage.py migrate --noinput && \
 #    python manage.py collectstatic --noinput && \
