@@ -2,7 +2,7 @@
 
 # create virtual environment and activate
 virtualenv --no-site-packages /code/virtualenv
-source /code/virtualenc/bin/activate
+source /code/virtualenv/bin/activate
 
 # Install using requirements.txt
 pip install -r requirements.txt

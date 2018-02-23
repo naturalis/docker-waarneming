@@ -16,20 +16,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip install virtualenv && \
-    mkdir /var/uwsgi
-#    pip install uwsgi && \
-#    mkdir /code && \
-#    virtualenv --no-site-packages /code/virtualenv
+RUN pip install virtualenv
 
 WORKDIR /code
 ADD supervisor.conf /opt/supervisor.conf
 ADD docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-
-#RUN python manage.py migrate --noinput && \
-#    python manage.py collectstatic --noinput && \
-#    /usr/bin/supervisorctl restart obs
-
-

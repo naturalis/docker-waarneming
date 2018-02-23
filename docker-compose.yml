@@ -4,10 +4,9 @@ services:
   web:
     image: naturalis/waarneming-obs:0.0.1
     volumes:
-      - /data/obs/django:/code
+      - /home/obs/django:/code
+      - /var/uwsgi:/var/uwsgi
     networks:
       - default
-    ports:
-      - "8000:8000"
-    command:
-      tail -f /dev/null
+
+
