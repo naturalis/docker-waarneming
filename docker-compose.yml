@@ -4,19 +4,21 @@ services:
   obs:
     image: naturalis/waarneming-obs:0.0.1
     restart: unless-stopped
+    environment:
+      PYTHON_USER: obs
     volumes:
       - /home/obs/django:/code
       - /var/uwsgi:/var/uwsgi
-    networks:
-      - default
+    network_mode: "host"
   noordzee:
     image: naturalis/waarneming-obs:0.0.1
     restart: unless-stopped
+    environment:
+      PYTHON_USER: noordzee
     volumes:
       - /home/noordzee/django:/code
       - /var/uwsgi:/var/uwsgi
-    networks:
-      - default
+    network_mode: "host"
 #  nederlandzoemt:
 #    image: naturalis/waarneming-obs:0.0.1
 #    volumes:
