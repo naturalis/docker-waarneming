@@ -1,12 +1,27 @@
 version: '3'
 
 services:
-  web:
+  obs:
     image: naturalis/waarneming-obs:0.0.1
+    restart: unless-stopped
     volumes:
       - /home/obs/django:/code
       - /var/uwsgi:/var/uwsgi
     networks:
       - default
-
+  noordzee:
+    image: naturalis/waarneming-obs:0.0.1
+    restart: unless-stopped
+    volumes:
+      - /home/noordzee/django:/code
+      - /var/uwsgi:/var/uwsgi
+    networks:
+      - default
+#  nederlandzoemt:
+#    image: naturalis/waarneming-obs:0.0.1
+#    volumes:
+#      - /home/nederlandzoemt/django:/code
+#      - /var/uwsgi:/var/uwsgi
+#    networks:
+#      - default
 
