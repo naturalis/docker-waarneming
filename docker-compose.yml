@@ -2,7 +2,7 @@ version: '3'
 
 services:
   obs:
-    image: naturalis/waarneming-obs:0.0.1
+    image: naturalis/waarneming-django-2:0.0.1
     restart: unless-stopped
     environment:
       PYTHON_USER: obs
@@ -11,7 +11,7 @@ services:
       - /var/uwsgi:/var/uwsgi
     network_mode: "host"
   noordzee:
-    image: naturalis/waarneming-obs:0.0.1
+    image: naturalis/waarneming-django-2:0.0.1
     restart: unless-stopped
     environment:
       PYTHON_USER: noordzee

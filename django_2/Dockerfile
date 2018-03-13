@@ -1,7 +1,7 @@
-FROM python:3.6
+FROM python:2.7
 
 MAINTAINER Hugo van Duijn <hugo.vanduijn@naturalis.nl>
-LABEL Description="Python django OBS app, based on Python 3.6." 
+LABEL Description="Python django app, based on Python 2.7." 
 
 ENV PYTHONUNBUFFERED 1
 
