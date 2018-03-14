@@ -1,4 +1,4 @@
-version: '3'
+version: '4'
 
 services:
   obs:
@@ -21,6 +21,15 @@ services:
       - /home/obs/static:/static
       - /var/uwsgi:/var/uwsgi
     network_mode: "host"
+  nederlandzoemt:
+    image: naturalis/waarneming-django-3:0.0.1
+    restart: unless-stopped
+    environment:
+      PYTHON_USER: nederlandzoemt
+    volumes:
+      - /home/nederlandzoemt/django:/code
+      - /var/uwsgi:/var/uwsgi
+    network_mode: "host"
 #  nederlandzoemt:
 #    image: naturalis/waarneming-obs:0.0.1
 #    volumes:
@@ -28,4 +37,3 @@ services:
 #      - /var/uwsgi:/var/uwsgi
 #    networks:
 #      - default
-
