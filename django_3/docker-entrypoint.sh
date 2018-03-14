@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # create virtual environment and activate
-virtualenv --no-site-packages /code/virtualenv
-source /code/virtualenv/bin/activate
+virtualenv --no-site-packages /virtualenv
+source /virtualenv/bin/activate
 
 # Install using requirements.txt
 pip install -r requirements.txt
