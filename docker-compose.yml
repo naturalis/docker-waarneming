@@ -8,6 +8,7 @@ services:
       PYTHON_USER: obs
     volumes:
       - /home/obs/django:/code
+      - /home/obs/static:/static
       - /var/uwsgi:/var/uwsgi
     network_mode: "host"
   noordzee:
@@ -17,6 +18,7 @@ services:
       PYTHON_USER: noordzee
     volumes:
       - /home/noordzee/django:/code
+      - /home/obs/static:/static
       - /var/uwsgi:/var/uwsgi
     network_mode: "host"
 #  nederlandzoemt:

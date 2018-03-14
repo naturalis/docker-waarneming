@@ -17,7 +17,7 @@ python manage.py migrate
 
 # Start server
 echo "Starting server"
-/bin/sed -i -E "s/{{PYTHON_USER}}/$PYTHON_USER/g" /opt/supervisor.conf
+/bin/sed -i -E "s/\{\{PYTHON_USER\}\}/$PYTHON_USER/g" /opt/supervisor.conf
 
 supervisord -c /opt/supervisor.conf -n
 

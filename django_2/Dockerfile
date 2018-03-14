@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip install virtualenv
+RUN pip install dotenv virtualenv
 
 WORKDIR /code
 ADD supervisor.conf /opt/supervisor.conf
