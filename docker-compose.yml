@@ -18,7 +18,7 @@ services:
       PYTHON_USER: noordzee
     volumes:
       - /home/noordzee/django:/code
-      - /home/obs/static:/static
+      - /home/noordzee/static:/static
       - /var/uwsgi:/var/uwsgi
     network_mode: "host"
   nederlandzoemt:
@@ -28,6 +28,7 @@ services:
       PYTHON_USER: nederlandzoemt
     volumes:
       - /home/nederlandzoemt/django:/code
+      - /home/nederlandzoemt/static:/static
       - /var/uwsgi:/var/uwsgi
     network_mode: "host"
 #  nederlandzoemt:
