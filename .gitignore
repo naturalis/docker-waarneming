@@ -1,0 +1,11 @@
+amce.json
+files/
+traefik.toml
+.env
+*.pem
+obs/
+sock/
+uwsgi/
+nginx/nginx_ssl/
+pgbouncer/userlist.txt
+pgbouncer/pgbouncer.ini
