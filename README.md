@@ -5,75 +5,63 @@ Docker compose file and docker files for running waarneming.nl
 
 Contents
 -------------
-Dockerfiles creates various waarneming.nl containers
+Dockerfiles and docker-compose to create waarneming.nl environment
 
 
-obs
+.env file
+```
+OBS_BASE_PATH=/data/waarneming/obs
+NOORDZEE_BASE_PATH=/data/waarneming/noordzee
+NEDERLANDZOEMT_BASE_PATH=/data/waarneming/nederlandzoemt
+PHPAPP_BASE_PATH=/data/waarneming/phpapp
+MEDIA_BASE_PATH=/data/waarneming/media
+```
+
+Build containers first: 
 -------------
-Dockerfiles for obs django app. 
 
-Defined in dockerfile
-- python version
-- system packages
-- python pip virtualenv 
-- supervisord config 
-- docker-entrypoint.sh script
-
-Container requires on mapping volume /code to the obs django repository which should include atleast a requirements.txt
-
-.env file in obs django repository
 ```
-DEBUG=True
-DEBUG_TOOLBAR=False
-DJANGO_EXTENSIONS=False
-
-DB_NAME=waarneming
-DB_USER=obs
-DB_PASSWORD=xxxxx
-DB_HOST=172.16.1.31  # <- make sure local ip of server is used, 127.0.0.1 will not work since pgbouncer does not run from within the docker container.
-MEMCACHED_BACKEND=172.16.1.31:11211   # <- add this and make sure local ip of server is used, 127.0.0.1 will not work since memcached does not run from within the docker container.
-```
-
-Modify app/settings.py, replace fixed location of cache to environment variable location
-```
-CACHES = {
-    'default': {
-          'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
-          'LOCATION': env('MEMCACHED_BACKEND', '127.0.0.1:11211'),
-     },
-```
-When container is started with docker-compose then 
-
-virtual environment is created and activated. 
-```
-virtualenv --no-site-packages /code/virtualenv
-source /code/virtualenv/bin/activate
-```
-
-Python stuff is installed using pip and static files are collected + migrate is run 
-```
-pip install -r requirements.txt
-python manage.py collectstatic --noinput
-python manage.py migrate
-```
-
-Last step server is started.
-```
-supervisord -c /opt/supervisor.conf -n
-```
-
-Since uwsgi uses a volume for the socket, access from nginx is possible from the host server. 
-
-Instruction building image
--------------
-No special instructions, all files in repo are used except README.md, LICENCE and docker-compose.yml
-```
-docker build naturalis/<app>:0.0.1 .
+cd django_2
+docker build -t naturalis/waarneming-django-2:0.0.1 .
+cd ..
+cd php
+docker build -t naturalis/waarneming-php:0.0.1 .
+cd ..
 ```
 
 Instruction running docker-compose.yml
 -------------
-only docker-compose.yml is used
+nginx  
+  configs in nginx/*
+adjustments: 
+- nginx_include/php* : fastcgi_pass            unix:/sock/php-fpm.socket;
+- nginx_sites/beta.waarneming.nl : memcached_pass 127.0.0.1:11211;  ( instead of localhost ) 
+
+
+obs, based on : django_2
+volumes: 
+/code   /data/waarneming/obs/django  <-  django / obs private repo. 
+/static /data/waarneming/obs/static
+
+config ( db parameters ) : /data/waarneming/obs/django/.env
+
+php  ( php-fpm )
+container: 
+cd php
+docker build -t naturalis/waarneming-php:0.0.1 .
+in zz-docker.conf config adjustment from tcp to socket based
+also some extra php modules 
+
+pgbouncer
+create files from template  (pgbouncer.ini and userlist.txt)
+- configure database IP in pgbouncer.ini 
+- configure user list in userlist.txt
+
+memcached
+- nothing special
+
+redis
+- nothing special
 
 
 ````
