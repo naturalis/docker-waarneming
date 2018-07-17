@@ -36,12 +36,13 @@ nginx
 adjustments: 
 - nginx_include/php* : fastcgi_pass            unix:/sock/php-fpm.socket;
 - nginx_sites/beta.waarneming.nl : memcached_pass 127.0.0.1:11211;  ( instead of localhost ) 
-
+- nginx_ssl/ place ssl certs here
 
 obs, based on : django_2
 volumes: 
 /code   /data/waarneming/obs/django  <-  django / obs private repo. 
 /static /data/waarneming/obs/static
+current issue: socket permissions 
 
 config ( db parameters ) : /data/waarneming/obs/django/.env
 
