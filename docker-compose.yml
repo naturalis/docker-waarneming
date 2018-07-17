@@ -12,7 +12,7 @@ services:
      - "waarneming.nl:127.0.0.1"
     depends_on:
       - "php"
-    volumes: 
+    volumes:
       - ./nginx/nginx_include:/etc/nginx/include
       - ./nginx/nginx_sites:/etc/nginx/sites-enabled
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf

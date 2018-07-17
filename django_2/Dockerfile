@@ -9,7 +9,7 @@ ENV PYTHONUNBUFFERED 1
 RUN apt-get update && apt-get install -y --no-install-recommends \
         libmemcached-dev \
         zlib1g-dev \
-        libgdal1h \
+        libgdal20 \
         supervisor \
         postgresql-client \
         && \
