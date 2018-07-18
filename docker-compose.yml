@@ -8,10 +8,6 @@ services:
     ports:
       - 80:80
       - 443:443
-    extra_hosts:
-     - "waarneming.nl:127.0.0.1"
-    depends_on:
-      - "php"
     volumes: 
       - ./nginx/nginx_include:/etc/nginx/include
       - ./nginx/nginx_sites:/etc/nginx/sites-enabled
@@ -26,11 +22,13 @@ services:
       - ${MEDIA_BASE_PATH:-./media}:/data/waarneming/media
 
   obs:
-    image: naturalis/waarneming-django-2:0.0.1
+    image: naturalis/waarneming-django-3:0.0.1
     restart: unless-stopped
     network_mode: host
     environment:
       PYTHON_USER: obs
+      PYTHON_UID: 3000
+      PYTHON_GID: 3000
     volumes:
       - ${OBS_BASE_PATH:-./obs}/django:/code
       - ${OBS_BASE_PATH:-./obs}/static:/static

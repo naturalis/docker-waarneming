@@ -21,8 +21,8 @@ Build containers first:
 -------------
 
 ```
-cd django_2
-docker build -t naturalis/waarneming-django-2:0.0.1 .
+cd django_3
+docker build -t naturalis/waarneming-django-3:0.0.1 .
 cd ..
 cd php
 docker build -t naturalis/waarneming-php:0.0.1 .
@@ -38,7 +38,7 @@ adjustments:
 - nginx_sites/beta.waarneming.nl : memcached_pass 127.0.0.1:11211;  ( instead of localhost ) 
 - nginx_ssl/ place ssl certs here
 
-obs, based on : django_2
+obs, based on : django_3
 volumes: 
 /code   /data/waarneming/obs/django  <-  django / obs private repo. 
 /static /data/waarneming/obs/static
