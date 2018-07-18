@@ -29,6 +29,14 @@ docker build -t naturalis/waarneming-php:0.0.1 .
 cd ..
 ```
 
+## Generate local ssl keys
+Keys are untrusted but usefull for development
+```
+cd scripts
+./generate_ssh.sh
+mv ssl/* ../nginx/nginx_ssl
+```
+
 Instruction running docker-compose.yml
 -------------
 nginx  

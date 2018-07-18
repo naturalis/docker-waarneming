@@ -9,3 +9,4 @@ uwsgi/
 nginx/nginx_ssl/
 pgbouncer/userlist.txt
 pgbouncer/pgbouncer.ini
+scripts/ssl
